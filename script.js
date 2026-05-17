@@ -1,0 +1,98 @@
+const menuToggle = document.querySelector(".menu-toggle");
+const mainNav = document.querySelector(".main-nav");
+
+if (menuToggle && mainNav) {
+  menuToggle.addEventListener("click", () => {
+    const isOpen = mainNav.classList.toggle("is-open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  mainNav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      mainNav.classList.remove("is-open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    });
+  });
+}
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.15 }
+);
+
+document.querySelectorAll(".reveal-up").forEach((el) => observer.observe(el));
+
+const statNumbers = document.querySelectorAll(".stat-number");
+const statsObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) {
+        return;
+      }
+
+      const el = entry.target;
+      const target = Number(el.getAttribute("data-target"));
+      const duration = 1200;
+      const start = performance.now();
+
+      const animate = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        el.textContent = Math.floor(progress * target).toString();
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          el.textContent = target.toString();
+        }
+      };
+
+      requestAnimationFrame(animate);
+      statsObserver.unobserve(el);
+    });
+  },
+  { threshold: 0.4 }
+);
+
+statNumbers.forEach((stat) => statsObserver.observe(stat));
+
+const filterButtons = document.querySelectorAll(".filter-btn");
+const serviceCards = document.querySelectorAll(".service-card");
+
+filterButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    filterButtons.forEach((btn) => btn.classList.remove("is-active"));
+    button.classList.add("is-active");
+
+    const filter = button.getAttribute("data-filter");
+
+    serviceCards.forEach((card) => {
+      const categories = (card.getAttribute("data-category") || "").split(" ");
+      const isMatch = filter === "all" || categories.includes(filter);
+      card.classList.toggle("is-hidden", !isMatch);
+    });
+  });
+});
+
+const form = document.getElementById("contact-form");
+const formMessage = document.getElementById("form-message");
+
+if (form && formMessage) {
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (!form.checkValidity()) {
+      formMessage.textContent = "Veuillez remplir tous les champs avant l'envoi.";
+      return;
+    }
+
+    formMessage.textContent = "Merci. Votre demande a bien ete envoyee.";
+    form.reset();
+  });
+}

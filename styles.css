@@ -233,7 +233,7 @@ a {
   border-radius: calc(var(--radius) + 6px);
   padding: 1.35rem;
   background:
-    linear-gradient(175deg, rgba(10, 24, 14, 0.1) 0%, rgba(10, 24, 14, 0.7) 74%),
+    linear-gradient(175deg, rgba(10, 24, 14, 0.02) 0%, rgba(10, 24, 14, 0.35) 74%),
     url("WhatsApp Image 2026-05-14 at 6.32.34 PM.jpeg") center 35% / cover;
   border: 1px solid rgba(23, 32, 21, 0.08);
   box-shadow: var(--shadow);
@@ -352,7 +352,7 @@ a {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(9, 19, 12, 0.06) 18%, rgba(9, 19, 12, 0.78) 90%);
+  background: linear-gradient(180deg, rgba(9, 19, 12, 0.02) 18%, rgba(9, 19, 12, 0.35) 90%);
   z-index: 0;
 }
 
@@ -408,7 +408,7 @@ a {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(140deg, rgba(8, 20, 12, 0.68), rgba(8, 20, 12, 0.42));
+  background: linear-gradient(140deg, rgba(8, 20, 12, 0.25), rgba(8, 20, 12, 0.15));
 }
 
 .about-grid > * {
@@ -454,7 +454,7 @@ a {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(145deg, rgba(8, 21, 13, 0.64), rgba(8, 21, 13, 0.38));
+  background: linear-gradient(145deg, rgba(8, 21, 13, 0.25), rgba(8, 21, 13, 0.15));
 }
 
 .contact-wrap > * {
@@ -622,5 +622,131 @@ textarea:focus {
 
   .section {
     padding: 4.3rem 0;
+  }
+}
+
+/* Carousel Styles */
+.carousel-section {
+  background: linear-gradient(180deg, rgba(231, 237, 220, 0.35), rgba(231, 237, 220, 0.05));
+}
+
+.carousel-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: calc(var(--radius) + 6px);
+  box-shadow: var(--shadow);
+  aspect-ratio: 16 / 10;
+  background: #000;
+}
+
+.carousel-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.carousel-item {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.carousel-item.active {
+  opacity: 1;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.85);
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #172015;
+  z-index: 10;
+  transition: all 0.3s ease;
+  font-weight: 700;
+}
+
+.carousel-btn:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-prev {
+  left: 1.5rem;
+}
+
+.carousel-next {
+  right: 1.5rem;
+}
+
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.65rem;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(28, 124, 76, 0.4);
+  background: rgba(28, 124, 76, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.indicator.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  width: 28px;
+  border-radius: 6px;
+}
+
+.indicator:hover {
+  border-color: var(--primary);
+  background: rgba(28, 124, 76, 0.5);
+}
+
+@media (max-width: 740px) {
+  .carousel-container {
+    aspect-ratio: 16 / 12;
+  }
+
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .carousel-prev {
+    left: 0.75rem;
+  }
+
+  .carousel-next {
+    right: 0.75rem;
   }
 }

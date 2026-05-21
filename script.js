@@ -62,21 +62,23 @@ const statsObserver = new IntersectionObserver(
 
 statNumbers.forEach((stat) => statsObserver.observe(stat));
 
-const filterButtons = document.querySelectorAll(".filter-btn");
-const serviceCards = document.querySelectorAll(".service-card");
+// Service accordion
+document.querySelectorAll(".svc-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const isOpen = btn.getAttribute("aria-expanded") === "true";
+    const panel = btn.nextElementSibling;
 
-filterButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    filterButtons.forEach((btn) => btn.classList.remove("is-active"));
-    button.classList.add("is-active");
-
-    const filter = button.getAttribute("data-filter");
-
-    serviceCards.forEach((card) => {
-      const categories = (card.getAttribute("data-category") || "").split(" ");
-      const isMatch = filter === "all" || categories.includes(filter);
-      card.classList.toggle("is-hidden", !isMatch);
+    // Close all other panels
+    document.querySelectorAll(".svc-btn").forEach((other) => {
+      if (other !== btn) {
+        other.setAttribute("aria-expanded", "false");
+        other.nextElementSibling.classList.remove("is-open");
+      }
     });
+
+    // Toggle current
+    btn.setAttribute("aria-expanded", String(!isOpen));
+    panel.classList.toggle("is-open", !isOpen);
   });
 });
 
